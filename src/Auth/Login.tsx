@@ -1,6 +1,19 @@
 import React from 'react';
-import { Form } from 'reactstrap';
+
 import APIURL from '../Helpers/environment';
+
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import {Form, FormGroup, Label, Input}  from 'reactstrap';
 
 export interface LoginProps {
     
@@ -37,33 +50,45 @@ class Login extends React.Component<LoginProps, LoginState> {
 
     render() { 
         return ( 
-            <Form onSubmit={this.handleSubmit}>
-                <h3>RunJournal Sign In</h3>
-
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.currentTarget.value })} required />
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ password: e.currentTarget.value })} required />
-                </div>
-
-                {/* Do I want to allow remembering password?
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="passwordcheck" />
-                        <label className="custom-control-label" htmlFor="passwordcheck">Remember me</label>
-                    </div>
-                </div> */}
-
-                <br/>
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p>
-            </Form>
+            <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div>
+        
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <form noValidate>
+          
+        <Label htmlFor='username'>Email</Label>
+                    <Input type='email' placeholder='Enter valid email address' pattern={"^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"|| "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" } onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.currentTarget.value })} required/>
+          <Label htmlFor='password'>Password</Label>           
+          <Input type='password' placeholder='Min 5 characters with Capital and Lowercase' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ password: e.currentTarget.value })} required/>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          <Button
+            type="submit"
+            
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Lost your bird?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Button>
+              No account? Register today
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+            
         );
     }
 }
