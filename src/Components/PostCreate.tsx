@@ -2,15 +2,9 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+
 import Container from '@material-ui/core/Container';
-import { FormControlLabel } from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox'
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem'
-import SvgIcon from "@material-ui/core/SvgIcon";
-import { makeStyles } from '@material-ui/core/styles';
+
 
 export interface CreatePostProps {
     

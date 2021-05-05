@@ -1,15 +1,15 @@
 import React, {useState } from 'react';
 
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Auth from "./Auth/Auth";
-import Login from "./Auth/Login";
-import Signup from "./Auth/Signup";
+
 import Header from "./Components/Header";
-import Main from "./Components/Main";
+
 import PostCreate from './Components/PostCreate'
 import LessonCreate from './Components/LessonCreate'
+import LessonData from './Components/LessonData'
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
             <Switch>
               <Route exact path='/'><Auth updateToken={updateToken} /></Route> 
               <Route path="/create-post" component={PostCreate} />
-              <Route path="/create-lesson" component={LessonCreate} />
+              <Route path="/create-lesson" component={LessonData}/>
             </Switch>
           </div>
         </div>

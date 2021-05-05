@@ -3,18 +3,18 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-
+import {LessonInterface} from './LessonInterfaces'
 
 
 export interface LessonLogProps {
     sessionToken: string;
     fetchLessons: Function;
-    lesson: LessonLog;
-    lessons: LessonLog[];
+    lesson: LessonInterface;
+    lessons: LessonInterface[];
     editUpdateLesson: Function;
     updateOn: Function;
     
@@ -42,7 +42,7 @@ class LessonLog extends React.Component<LessonLogProps, LessonLogState> {
     }
 
     deleteLesson = (lesson: any) => {
-        let token = this.props.sessionToken ? this.props.sessionToken: localStorage.getItem('sessionToken');
+        let token = this.props.sessionToken ? this.props.sessionToken: localStorage.getItem('token');
         fetch(`http://localhost:3000/lesson/deletelesson/${lesson.id}`, {
   method: 'DELETE',
       headers: new Headers({

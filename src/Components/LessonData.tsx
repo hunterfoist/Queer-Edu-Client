@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import LessonLog from './LessonLog';
 
 import LessonCreate from './LessonCreate';
+import LessonEdit from './LessonEdit';
+import {LessonInterface} from './LessonInterfaces'
 
 
 
@@ -14,7 +16,7 @@ export interface LessonDataProps {
 }
  
 export interface LessonDataState {
-    lessons: LessonLog[];
+    lessons: LessonInterface[];
     updateActive: boolean;
     lessonToUpdate: {};
 }
@@ -25,11 +27,12 @@ class LessonData extends React.Component<LessonDataProps, LessonDataState> {
     constructor(props: LessonDataProps) {
         super(props);
         this.state = { 
-            lessons: {
+            lessons: [{
                 lessonName: "",
                 lessonDescription: "",
-                fileUpload: ""
-            },
+                fileUpload: "",
+                id: 1
+            }],
             updateActive: false,
             lessonToUpdate: {}
         }
@@ -42,7 +45,7 @@ class LessonData extends React.Component<LessonDataProps, LessonDataState> {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
-        'Authorization': `${localStorage.getItem('sessionToken')}`
+        'Authorization': `${localStorage.getItem('token')}`
       })
     })
     .then(response => response.json())
@@ -56,14 +59,19 @@ class LessonData extends React.Component<LessonDataProps, LessonDataState> {
   };
 
   updateOn = () => this.setState({updateActive: true});
+  updateOff = () => this.setState({updateActive: false});
 
 
 componentDidMount = () => {
     this.fetchLessons();
 }
 
+// componentDidUpdate = () => {
+//     this.fetchLessons();
+// }
+
 displayCards() {
-    return this.state.lessons.length > 0 ? this.state.lessons.map((lesson) => <LessonLog lesson={lesson} lessons={this.state.lessons} editUpdateLesson={this.editUpdateLesson} updateOn={this.updateOn} fetchLessons={this.fetchLessons} sessionToken={this.props.sessionToken} />) : null;
+    return this.state.lessons.length > 0 ? this.state.lessons.map((lesson) => <LessonLog lesson={lesson} lessons={this.state.lessons} editUpdateLesson={this.editUpdateLesson} updateOn={this.updateOn} fetchLessons={this.fetchLessons.bind(this)} sessionToken={this.props.sessionToken} />) : null;
 }
     render() { 
         return (
@@ -74,6 +82,7 @@ displayCards() {
            </Grid>
            <Grid container item xs={9} alignItems="flex-start">
           {this.displayCards()}
+          {this.state.updateActive ? <LessonEdit lessonToUpdate={this.state.lessonToUpdate} updateOn ={this.updateOn} updateOff={this.updateOff} sessionToken={this.props.sessionToken} /> : <></>}
           </Grid>
            </Grid>
    
