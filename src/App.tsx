@@ -8,6 +8,8 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
+import PostCreate from './Components/PostCreate'
+import LessonCreate from './Components/LessonCreate'
 
 function App() {
 
@@ -32,9 +34,9 @@ function App() {
         <div className="auth-wrapper">
           <div className="auth-inner">
             <Switch>
-              <Route exact path='/' component={Login} />
-              <Route path="/sign-in" component={Login} />
-              <Route path="/sign-up" component={Signup} />
+              <Route exact path='/'><Auth updateToken={updateToken} /></Route> 
+              <Route path="/create-post" component={PostCreate} />
+              <Route path="/create-lesson" component={LessonCreate} />
             </Switch>
           </div>
         </div>

@@ -1,7 +1,5 @@
-import React from 'react';
-
-import APIURL from '../Helpers/environment';
-
+import React from "react";
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,86 +9,140 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {Form, FormGroup, Label, Input}  from 'reactstrap';
 
-export interface LoginProps {
-    
+interface LoginProps {
+  name?: string;
+  value?: string;
+  updateToken: (newToken: string) => void
+  handleToggle: () => void;
 }
- 
-export interface LoginState {
-    email: string,
-    password: string
+interface LoginState {
+  email: string;
+  password: string;
+  errors: {
+    email: string;
+    password: string;
+  };
 }
- 
-class Login extends React.Component<LoginProps, LoginState> {
+const Regex = RegExp(
+  /^\s?[A-Z0–9]+[A-Z0–9._+-]{0,}@[A-Z0–9._+-]+\.[A-Z0–9]{2,4}\s?$/i
+);
+
+export default class Login extends React.Component<LoginProps, LoginState> {
+
     constructor(props: LoginProps) {
         super(props);
-        this.state = { 
-            email: '', 
-            password: ''  
+        const initialState = {
+          email: "",
+          password: "",
+          errors: {
+            email: "",
+            password: "",
+          },
         };
-    }
+        this.state = initialState;
+        this.handleChange = this.handleChange.bind(this);
+      }
 
-    handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        fetch(`${APIURL}/user/login`, {
-            method: 'POST',
-            body: JSON.stringify({user: {email: this.state.email, password: this.state.password}}),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-        })
+  handleChange = (event: any) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+    switch (name) {
+      case "email":
+        errors.email = Regex.test(value) ? "" : "Email is not valid!";
+        break;
+      case "password":
+        errors.password =
+          value.length < 8 ? "Password must be eight characters long!" : "";
+        break;
+      default:
+        break;
     }
+    this.setState(Object.assign(this.state, { errors, [name]: value }));
+    console.log(this.state.errors);
+  };
+  handleSubmit = (event: any) => {
+      event.preventDefault();
+      fetch('http://localhost:3000/user/login', {
+         method: 'POST',
+         body: JSON.stringify({user: {email: this.state.email, password: this.state.password}}),
+         headers: new Headers({
+             'Content-Type': 'application/json'
+         })
+      }).then(
+          (response) => response.json()
+      ).then((data) => {
+        this.props.updateToken(data.sessionToken)
+        console.log(data.sessionToken)
+      })
+  };
 
-    render() { 
-        return ( 
-            <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div>
-        
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <form noValidate>
-          
-        <Label htmlFor='username'>Email</Label>
-                    <Input type='email' placeholder='Enter valid email address' pattern={"^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"|| "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" } onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ email: e.currentTarget.value })} required/>
-          <Label htmlFor='password'>Password</Label>           
-          <Input type='password' placeholder='Min 5 characters with Capital and Lowercase' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.setState({ password: e.currentTarget.value })} required/>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Lost your bird?
-              </Link>
+  
+  render() {
+    console.log(this.props);
+    const { errors } = this.state;
+    return (
+      <Container>
+        <CssBaseline />
+          <Typography>Login</Typography>
+          <br/>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                autoComplete="email"
+                name="email"
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                autoFocus
+                onChange={this.handleChange}
+              />
+              {errors.email.length > 0 && (
+                <span style={{ color: "red" }}>{errors.email}</span>
+              )}
             </Grid>
+        
+            <Grid item xs={12} sm={4}>
+              <TextField
+                autoComplete="password"
+                name="password"
+                variant="outlined"
+                required
+                fullWidth
+                type="password"
+                id="password"
+                label="Password"
+                autoFocus
+                onChange={this.handleChange}
+              />
+              {errors.password.length > 5 && (
+                <span style={{ color: "red" }}>{errors.password}</span>
+              )}
+            </Grid>
+            
+              <Button
+              type="submit"
+              onClick={this.handleSubmit}
+              fullWidth
+              variant="contained"
+              color="primary"
+              >Login</Button>
             <Grid item>
-              <Button>
-              No account? Register today
+              <Button 
+              onClick={this.props.handleToggle}
+              >
+                New to the App? Register Here! 
+                
               </Button>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
-            
-        );
-    }
+            </Grid>
+          </form>
+      </Container>
+    );
+  }
 }
- 
-export default Login;
+
