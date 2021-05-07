@@ -40,7 +40,7 @@ class CreatePost extends React.Component<CreatePostProps, CreatePostState> {
 
 
         handleSubmit = (event: any) => {
-          let token = this.props.sessionToken ? this.props.sessionToken: localStorage.getItem('sessionToken');
+          let token = this.props.sessionToken ? this.props.sessionToken: localStorage.getItem('token');
     
             event.preventDefault();
             fetch('http://localhost:3000/post/createpost', {
@@ -57,7 +57,7 @@ class CreatePost extends React.Component<CreatePostProps, CreatePostState> {
               this.setState({ postTitle: ''});
               this.setState({ postDescription: ''});
               this.setState({ fileUpload: ''});
-              this.props.fetchPosts();
+              // this.props.fetchPosts();
             })
           }
 

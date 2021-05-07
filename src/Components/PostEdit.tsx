@@ -2,33 +2,36 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { FormControlLabel } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem';
 
-
-
-export interface LessonEditProps {
+export interface PostEditProps {
     sessionToken: string;
     
     updateOff: Function;
-    lessonToUpdate: any | null;
+    postToUpdate: any | null;
     updateOn: Function;
 }
  
-export interface LessonEditState {
-    lessonName: string;
-    lessonDescription: string;
+export interface PostEditState {
+    postTitle: string;
+    postDescription: string;
     fileUpload: string;
     id: number | null
 }
  
-class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
-    constructor(props: LessonEditProps) {
+class PostEdit extends React.Component<PostEditProps, PostEditState> {
+    constructor(props: PostEditProps) {
         super(props);
         this.state = { 
-        id: this.props.lessonToUpdate ? this.props.lessonToUpdate.id : null,
-            lessonName: "",
-            lessonDescription: "",
+        id: this.props.postToUpdate ? this.props.postToUpdate.id : null,
+            postTitle: "",
+            postDescription: "",
             fileUpload: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,19 +41,19 @@ class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
         let token = this.props.sessionToken ? this.props.sessionToken: localStorage.getItem('token');
   
           event.preventDefault();
-          fetch(`http://localhost:3000/lesson/updatelesson/${this.props.lessonToUpdate.id}`, {
+          fetch(`http://localhost:3000/post/updatepost/${this.props.postToUpdate.id}`, {
             method: 'PUT',
             headers: new Headers({
               'Content-Type': 'application/json',
               'Authorization': token ? token : ''
             }),
-            body: JSON.stringify({ lesson: { lessonName: this.state.lessonName, lessonDescription: this.state.lessonDescription, fileUpload: this.state.fileUpload } })
+            body: JSON.stringify({ post: { postTitle: this.state.postTitle, postDescription: this.state.postDescription, fileUpload: this.state.fileUpload } })
           })
           .then(response => response.json())
-          .then(lessonData => {
-            console.table(lessonData);
-            this.setState({ lessonName: ''});
-            this.setState({ lessonDescription: ''});
+          .then(postData => {
+            console.table(postData);
+            this.setState({ postTitle: ''});
+            this.setState({ postDescription: ''});
             this.setState({ fileUpload: ''});
           })
           this.props.updateOff();
@@ -63,21 +66,21 @@ class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
                   <br/>
                   <br/>
                   <br/>
-                  <h1>Update a Lesson!</h1>
+                  <h1>Update a Post!</h1>
                   <br/>
-                  <h2>Below, please name, describe, and provide a shared link to a queer-focused lesson you love to use!</h2>
+                  <h2>Below, please name, describe, and provide a shared link to a queer-focused post you love to use!</h2>
                   <Grid container spacing={2}>
                           <Grid item xs={12}>
                             <TextField
-                              autoComplete="Lesson Name"
-                              name="lessonName"
+                              autoComplete="Post Name"
+                              name="postTitle"
                               variant="outlined"
                               required
                               fullWidth
-                              onChange={(e) => this.setState({lessonName: e.target.value})}
-                              value={this.state.lessonName}
-                              id="lessonName"
-                              label="Lesson Name"
+                              onChange={(e) => this.setState({postTitle: e.target.value})}
+                              value={this.state.postTitle}
+                              id="postTitle"
+                              label="Post Name"
                               autoFocus
                             />
                           </Grid>
@@ -86,12 +89,12 @@ class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
                               variant="outlined"
                               required
                               fullWidth
-                              id="lessonDescription"
-                              label="Lesson Description"
-                              onChange={(e) => this.setState({lessonDescription: e.target.value})}
-                              value={this.state.lessonDescription}
-                              name="lessonDescription"
-                              autoComplete="Lesson Description"
+                              id="postDescription"
+                              label="Post Description"
+                              onChange={(e) => this.setState({postDescription: e.target.value})}
+                              value={this.state.postDescription}
+                              name="postDescription"
+                              autoComplete="Post Description"
                             />
                           </Grid>
                           <Grid item xs={12}>
@@ -118,7 +121,7 @@ class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
                           fullWidth
                           variant="contained"
                         >
-                          Update Lesson!
+                          Update Post!
                         </Button >
                         </Grid>
                   </Container>
@@ -126,4 +129,4 @@ class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
           }
       }
        
-      export default LessonEdit;
+      export default PostEdit;

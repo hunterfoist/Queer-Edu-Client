@@ -264,8 +264,8 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
                 autoFocus
                 onChange={this.handleChange}
                 >
-                  <MenuItem value={1}>Teacher</MenuItem>
-                  <MenuItem value={2}>Student</MenuItem>
+                  <MenuItem value={'Teacher'}>Teacher</MenuItem>
+                  <MenuItem value={'Student'}>Student</MenuItem>
                 
                 </Select>
                 </Grid>

@@ -7,8 +7,8 @@ import Auth from "./Auth/Auth";
 
 import Header from "./Components/Header";
 
-import PostCreate from './Components/PostCreate'
-import LessonCreate from './Components/LessonCreate'
+import PostData from './Components/PostData'
+
 import LessonData from './Components/LessonData'
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
           <div className="auth-inner">
             <Switch>
               <Route exact path='/'><Auth updateToken={updateToken} /></Route> 
-              <Route path="/create-post" component={PostCreate} />
+              <Route path="/create-post" component={PostData} />
               <Route path="/create-lesson" component={LessonData}/>
             </Switch>
           </div>
