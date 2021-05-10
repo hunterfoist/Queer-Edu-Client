@@ -76,6 +76,7 @@ class LessonEdit extends React.Component<LessonEditProps, LessonEditState> {
                               fullWidth
                               onChange={(e) => this.setState({lessonName: e.target.value})}
                               value={this.state.lessonName}
+                              
                               id="lessonName"
                               label="Lesson Name"
                               autoFocus

@@ -17,6 +17,7 @@ interface SignUpProps {
   value?: any;
   updateToken: (newToken: string) => void;
   handleToggle: () => void;
+  updateTeacherOrStudent: (newTeacherOrStudent: string) => void; 
 }
 interface SignUpState {
     email: string,
@@ -105,6 +106,7 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
       ).then((data) => {
           console.log(data)
           this.props.updateToken(data.sessionToken)
+          this.props.updateTeacherOrStudent(data.teacherOrStudent)
       })
   };
 

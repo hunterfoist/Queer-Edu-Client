@@ -70,7 +70,7 @@ class CreatePost extends React.Component<CreatePostProps, CreatePostState> {
             <br/>
             <h1>Create a post!</h1>
             <br/>
-            <h2>Below, please name, describe, and provide a shared link to a queer-focused post you love to use!</h2>
+            <h2>Below, please name, describe, and provide a shared link to a queer-focused resource you love to use!</h2>
             <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
@@ -105,11 +105,11 @@ class CreatePost extends React.Component<CreatePostProps, CreatePostState> {
                         required
                         fullWidth
                         id="fileUpload"
-                        label="Google Drive Link"
+                        label="Link to Resource"
                         onChange={(e) => this.setState({fileUpload: e.target.value})}
                         value={this.state.fileUpload}
                         name="fileUpload"
-                        autoComplete="Please insert a link to a Google Drive Document"
+                        autoComplete="Please insert a link to a Resource"
                       />
                     </Grid>
                     

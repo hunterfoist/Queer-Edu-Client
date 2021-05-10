@@ -11,62 +11,52 @@ import { withStyles } from "@material-ui/core/styles";
 import {PostInterface} from './PostInterface'
 
 
-export interface PostLogProps {
+export interface AllPostLogProps {
     sessionToken: string;
     fetchPosts: Function;
     post: PostInterface;
     posts: PostInterface[];
-    editUpdatePost: Function;
-    updateOn: Function;
     classes: any;
     theme: any;
+    
 
 }
  
-export interface PostLogState {
+export interface AllPostLogState {
     open : boolean;
 }
  
 const styles = (theme:any) => ({
-  card: {
-    maxWidth: 350,
-    margin: "1em",
-    height: "100%",
-    marginTop: "4em",
-    transition: "0.3s",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    "&:hover": {
-      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+    card: {
+        maxWidth: 350,
+        margin: "1em",
+        height: "100%",
+      marginTop: "4em",
+      transition: "0.3s",
+      boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
+      "&:hover": {
+        boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+      },
+      alignItems: "flex-start",
+      padding: theme.spacing(3)
     },
-    alignItems: "flex-start",
-    padding: theme.spacing(3)
-  },
-  button: {
-    background: "#f0b459",
-    
-  },
-
-  buttonText: {
-    color: "black",
-    
-  },
-
-  updateButton: {
-    background: "lightgreen",
-    marginBottom: "1em"
-    
-  },
-
-  deleteButton: {
-    background: "red",
-    marginBottom: "1em"
-  },
- 
+    button: {
+      background: "#f0b459",
+      
+    },
   
-})
+    buttonText: {
+      color: "black",
+      
+    },
+  
+    
+   
+    
+  })
 
-class PostLog extends React.Component<PostLogProps, PostLogState> {
-    constructor(props: PostLogProps) {
+class AllPostLog extends React.Component<AllPostLogProps, AllPostLogState> {
+    constructor(props: AllPostLogProps) {
         super(props);
         this.state = { open : false };
     }
@@ -92,7 +82,7 @@ class PostLog extends React.Component<PostLogProps, PostLogState> {
     }
 
     render() { 
-      const {classes} = this.props;
+        const {classes} = this.props;
         return (
         
         <Card style={{ width: '100%' }} className={classes.card}>
@@ -107,17 +97,15 @@ class PostLog extends React.Component<PostLogProps, PostLogState> {
             </Typography>
 
             <Button color='inherit' component='button' className={classes.button}>
-            <Link align='center' gutterBottom rel="noopener" target="_blank" href={this.props.post.fileUpload} className={classes.buttonText} >
+            <Link align='center' gutterBottom rel="noopener" target="_blank" href={this.props.post.fileUpload} className={classes.buttonText}>
             Link to Resource
             </Link>
             </Button>
             
           </CardContent>
-          
         </CardActionArea>
         <CardActions style={{justifyContent: 'center'}}>
-        <Button className={classes.updateButton} variant='contained' size='small' onClick={() => {this.props.editUpdatePost(this.props.post); this.handleClickOpen() ; this.props.updateOn()}} >Update</Button>
-        <Button  className={classes.deleteButton} variant='contained' size='small'  onClick={() => this.deletePost(this.props.post)}>Delete</Button>
+        
         </CardActions>
       </Card>
 
@@ -127,4 +115,4 @@ class PostLog extends React.Component<PostLogProps, PostLogState> {
     }
 }
  
-export default withStyles(styles, {withTheme: true}) (PostLog);
+export default withStyles(styles, {withTheme: true}) (AllPostLog);

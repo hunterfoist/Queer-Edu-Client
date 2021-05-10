@@ -1,22 +1,21 @@
 import * as React from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import PostLog from './PostLog';
-import Button from '@material-ui/core/Button';
-import PostCreate from './PostCreate';
-import PostEdit from './PostEdit';
+import AllPostLog from './AllPostLog';
+
+
 import {PostInterface} from './PostInterface'
 
 
 
 
-export interface PostDataProps {
+export interface AllPostDataProps {
     
     sessionToken: string;
     
 }
  
-export interface PostDataState {
+export interface AllPostDataState {
     posts: PostInterface[];
     updateActive: boolean;
     postToUpdate: {};
@@ -24,8 +23,8 @@ export interface PostDataState {
 
 
 
-class PostData extends React.Component<PostDataProps, PostDataState> {
-    constructor(props: PostDataProps) {
+class AllPostData extends React.Component<AllPostDataProps, AllPostDataState> {
+    constructor(props: AllPostDataProps) {
         super(props);
         this.state = { 
             posts: [{
@@ -42,7 +41,7 @@ class PostData extends React.Component<PostDataProps, PostDataState> {
 
     fetchPosts() {
 
-        fetch('http://localhost:3000/post/getmyposts', {
+        fetch('http://localhost:3000/post/getallposts', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -72,7 +71,7 @@ componentDidMount = () => {
 // }
 
 displayCards() {
-    return this.state.posts.length > 0 ? this.state.posts.map((post) => <PostLog post={post} posts={this.state.posts} editUpdatePost={this.editUpdatePost} updateOn={this.updateOn} fetchPosts={this.fetchPosts.bind(this)} sessionToken={this.props.sessionToken} />) : null;
+    return this.state.posts.length > 0 ? this.state.posts.map((post) => <AllPostLog post={post} posts={this.state.posts}   fetchPosts={this.fetchPosts.bind(this)} sessionToken={this.props.sessionToken} />) : null;
 }
     render() { 
         return (
@@ -80,24 +79,16 @@ displayCards() {
           
         <Grid container xs={12}>
            <Grid>
-             <PostCreate fetchPosts={this.fetchPosts} sessionToken={this.props.sessionToken} />
+             
            </Grid>
            <Grid container item xs={9} alignItems="flex-start">
           {this.displayCards()}
-          {this.state.updateActive ? <PostEdit postToUpdate={this.state.postToUpdate} updateOn ={this.updateOn} updateOff={this.updateOff} sessionToken={this.props.sessionToken} /> : <></>}
+          
           </Grid>
            </Grid>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <Button onClick={this.fetchPosts.bind(this)}>Fetch Posts Button</Button>
+   
        </Container>);
     }
 }
  
-export default PostData;
+export default AllPostData;

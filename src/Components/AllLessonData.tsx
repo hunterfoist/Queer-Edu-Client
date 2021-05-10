@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import LessonLog from './LessonLog';
-import Button from '@material-ui/core/Button';
-import LessonCreate from './LessonCreate';
-import LessonEdit from './LessonEdit';
+import AllLessonLog from './AllLessonLog';
+
 
 import {LessonInterface} from './LessonInterfaces'
 
@@ -42,7 +40,7 @@ class LessonData extends React.Component<LessonDataProps, LessonDataState> {
 
     fetchLessons() {
 
-        fetch('http://localhost:3000/lesson/getmylessons', {
+        fetch('http://localhost:3000/lesson/getalllessons', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -67,12 +65,10 @@ componentDidMount = () => {
     this.fetchLessons();
 }
 
-// componentDidUpdate = () => {
-//     this.fetchLessons();
-// }
+
 
 displayCards() {
-    return this.state.lessons.length > 0 ? this.state.lessons.map((lesson) => <LessonLog lesson={lesson} lessons={this.state.lessons} editUpdateLesson={this.editUpdateLesson} updateOn={this.updateOn} fetchLessons={this.fetchLessons.bind(this)} sessionToken={this.props.sessionToken} />) : null;
+    return this.state.lessons.length > 0 ? this.state.lessons.map((lesson) => <AllLessonLog lesson={lesson} lessons={this.state.lessons}  fetchLessons={this.fetchLessons.bind(this)} sessionToken={this.props.sessionToken} />) : null;
 }
     render() { 
         return (
@@ -80,23 +76,14 @@ displayCards() {
          
         <Grid container xs={12}>
            <Grid>
-             <LessonCreate fetchLessons={this.fetchLessons} sessionToken={this.props.sessionToken} />
+             
            </Grid>
            <Grid container item xs={9} alignItems="flex-start">
           {this.displayCards()}
           
-          {this.state.updateActive ? <LessonEdit lessonToUpdate={this.state.lessonToUpdate} updateOn ={this.updateOn} updateOff={this.updateOff} sessionToken={this.props.sessionToken} /> : <></>}
           </Grid>
            </Grid>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <Button onClick={this.fetchLessons.bind(this)}>Fetch Lessons Button</Button>
+   
        </Container>);
     }
 }

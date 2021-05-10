@@ -15,6 +15,7 @@ interface LoginProps {
   value?: string;
   updateToken: (newToken: string) => void
   handleToggle: () => void;
+  updateTeacherOrStudent: (newTeacherOrStudent: string) => void; 
 }
 interface LoginState {
   email: string;
@@ -74,10 +75,14 @@ export default class Login extends React.Component<LoginProps, LoginState> {
           (response) => response.json()
       ).then((data) => {
         this.props.updateToken(data.sessionToken)
+        this.props.updateTeacherOrStudent(data.teacherOrStudent)
         console.log(data.sessionToken)
       })
   };
 
+ 
+  
+  
   
   render() {
     console.log(this.props);
@@ -127,6 +132,7 @@ export default class Login extends React.Component<LoginProps, LoginState> {
               <Button
               type="submit"
               onClick={this.handleSubmit}
+              
               fullWidth
               variant="contained"
               color="primary"

@@ -6,8 +6,13 @@ import { Jumbotron } from 'reactstrap';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+
+import Hero from '../Components/Hero'
+
+
 export interface AuthProps {
     updateToken: (newToken: string) => void; 
+    updateTeacherOrStudent: (newTeacherOrStudent: string) => void; 
 }
  
 export interface AuthState {
@@ -26,34 +31,19 @@ class Auth extends React.Component<AuthProps, AuthState> {
         this.setState({showLogin: true })
     }}
     
+    
+    
 
     render() { 
-        return ( <Container className="auth-container">
-        <div>
+        return ( 
+        
+        <Container >
+        <div className="auth-container">
+        
             <br/>
             <br/>
             <br/>
-                    <Jumbotron  className="w-100 text-dark" style={{backgroundImage: `url('https://images.unsplash.com/photo-1501349800519-48093d60bde0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1500&q=80')`  }}>
-                <Container>
-                  <Typography>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>  
-                <h1 className="display-3 text-dark">Welcome to QueerEdu</h1>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  <br/>
-                  
-                  
-                  </Typography>
-                </Container>
-              </Jumbotron>
+                    <Hero />
             </div>
             <div>
                 <Jumbotron>
@@ -70,7 +60,7 @@ class Auth extends React.Component<AuthProps, AuthState> {
                 <br/>
             </div>
                         <Grid container> 
-                            {this.state.showLogin === true ? <Login updateToken={this.props.updateToken} handleToggle={this.handleToggle} /> : <Signup updateToken={this.props.updateToken} handleToggle={this.handleToggle}/>}
+                            {this.state.showLogin === true ? <Login updateTeacherOrStudent={this.props.updateTeacherOrStudent} updateToken={this.props.updateToken} handleToggle={this.handleToggle} /> : <Signup updateTeacherOrStudent={this.props.updateTeacherOrStudent} updateToken={this.props.updateToken} handleToggle={this.handleToggle}/>}
                         </Grid>
                         
                         
